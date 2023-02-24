@@ -2,10 +2,7 @@
   (:require [clojure.test :refer :all]
             [schema.test :as s]
             [the-weather.mock.travel-data :as mock.travels]
-            [the-weather.logic.travel :as logic.travel])
-  )
-
-
+            [the-weather.logic.travel :as logic.travel]))
 
 (s/deftest airports-test
            (testing "output structure"

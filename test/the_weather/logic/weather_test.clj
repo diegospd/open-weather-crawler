@@ -1,8 +1,7 @@
 (ns the-weather.logic.weather-test
   (:require [clojure.test :refer :all]
             [the-weather.logic.weather :as logic.weather]
-            [schema.test :as s])
-  )
+            [schema.test :as s]))
 
 (s/deftest current-weather-uri-test
            (testing "api urls to open weather are well formed"

@@ -1,7 +1,7 @@
 (ns the-weather.controllers.weather
   (:require [the-weather.models.travel :as models.travel]
             [schema.core :as s]
-            [the-weather.controllers.control :as controllers.control :refer [tap!]]
+            [the-weather.controllers.helpers :as controllers.helpers :refer [tap!]]
             [the-weather.models.airport :as models.airport]
             [the-weather.diplomat.http-out :as http-out]
             [the-weather.logic.travel :as logic.travel]))
@@ -11,10 +11,10 @@
    errors-atom
    n-threads   :- s/Int
    api-key     :- s/Str]
-  (let [airport->weather+errors! #(controllers.control/reporting-errors! (partial http-out/airport->weather! api-key)
+  (let [airport->weather+errors! #(controllers.helpers/reporting-errors! (partial http-out/airport->weather! api-key)
                                                                          %
                                                                          errors-atom)]
-    (controllers.control/run-in-parallel-&-wait! airport->weather+errors! airports n-threads)))
+    (controllers.helpers/run-in-parallel-&-wait! airport->weather+errors! airports n-threads)))
 
 (defn- maybe-wait-for-next-batch!
   [elapsed-seconds]
@@ -35,7 +35,7 @@
    (if (empty? airports)
      accumulated-results
      (let [[batch remaining-airports] (split-at max-calls-by-minute airports)
-           {:keys [seconds results]}  (controllers.control/timing!
+           {:keys [seconds results]}  (controllers.helpers/timing!
                                         #(parallel-check! batch errors-atom n-threads api-key))]
        (when (not-empty remaining-airports)
          (maybe-wait-for-next-batch! seconds))

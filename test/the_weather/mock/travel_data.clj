@@ -1,8 +1,5 @@
 (ns the-weather.mock.travel-data
-  (:require [clojure.test :refer :all])
-  )
-
-
+  (:require [clojure.test :refer :all]))
 
 (def travels
   [{:origin-longitude -99.566

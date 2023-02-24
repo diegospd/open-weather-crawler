@@ -1,4 +1,4 @@
-(ns the-weather.controllers.control
+(ns the-weather.controllers.helpers
   (:require [clojure.core.async :as async])
   (:import (clojure.lang ExceptionInfo)))
 
